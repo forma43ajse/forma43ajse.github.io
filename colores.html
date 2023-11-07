@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección de Colores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        select {
+            width: 150px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .color-box {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            margin: 0 10px;
+            border-radius: 5px;
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Selección de Colores</h1>
+        <p>Para seleccionar múltiples colores, utilice la tecla Ctrl mientras hace clic en los elementos de la lista desplegable.</p>
+        <label for="colorSelector">Selecciona 3 colores:</label>
+        <br>
+        <select id="colorSelector" multiple>
+            <option value="0">Rojo</option>
+            <option value="1">Verde</option>
+            <option value="2">Azul</option>
+            <option value="3">Amarillo</option>
+            <option value="4">Rosa</option>
+            <option value="5">Morado</option>
+        </select>
+        <br>
+        <button onclick="mostrarColores()">Mostrar Colores</button>
+        
+        <div>
+            <br>
+            <div class="color-container">
+                <div class="color-box" id="color1"></div>
+                <div class="color-box" id="color2"></div>
+                <div class="color-box" id="color3"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const colors = [
+            { name: "Rojo", value: "#FF0000" },
+            { name: "Verde", value: "#00FF00" },
+            { name: "Azul", value: "#0000FF" },
+            { name: "Amarillo", value: "#FFFF00" },
+            { name: "Rosa", value: "#FFC0CB" },
+            { name: "Morado", value: "#800080" },
+        ];
+
+        function mostrarColores() {
+            const selectedOptions = Array.from(document.querySelectorAll('#colorSelector option:checked'));
+            if (selectedOptions.length !== 3) {
+                alert('Debes seleccionar exactamente tres colores.');
+                return;
+            }
+
+            const selectedColors = selectedOptions.map(option => colors[parseInt(option.value)]);
+
+            const colorBoxes = document.querySelectorAll('.color-box');
+
+            colorBoxes.forEach((box, index) => {
+                box.style.backgroundColor = selectedColors[index].value;
+                box.setAttribute('title', selectedColors[index].name);
+            });
+
+            const selectedColorNames = selectedColors.map(color => color.name).join(', ');
+            alert(`Estos son los tres colores que elegiste: ${selectedColorNames}`);
+        }
+    </script>
+</body>
+</html>
